@@ -1,0 +1,36 @@
+input,
+textarea,
+select {
+  min-height: 42px;
+  width: 100%;
+  border: 1.5px solid var(--colour-border, #e0e0e0);
+  border-radius: var(--radius-sm, 8px);
+  padding-left: 12px;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: #fff;
+}
+
+textarea {
+  padding-top: 12px;
+  min-height: 90px;
+}
+
+.ant-form-item {
+  margin-bottom: 14px;
+}
+
+.ant-form-item-label > label {
+  font-weight: 600;
+  color: #374542;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--colour-primary, #0b5c52);
+  box-shadow: 0 0 0 3px rgba(11, 92, 82, 0.14);
+}
+
+button {
+  height: 42px;
+}
