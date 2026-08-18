@@ -343,6 +343,32 @@ button.disabled-btn {
   animation: fadeSlideUp 0.35s ease;
 }
 
+/* wider variant for the two-column registration form */
+.authentication-form-wide {
+  width: 620px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 42px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--colour-text-muted);
+}
+
+.password-toggle:hover {
+  color: var(--colour-primary);
+}
+
 .auth-logo {
   width: 56px;
   height: 56px;

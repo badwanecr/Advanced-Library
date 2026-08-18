@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, message } from "antd";
 import Button from "../../components/Button";
+import PasswordInput from "../../components/PasswordInput";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apicalls/users";
 import { useDispatch } from "react-redux";
@@ -64,7 +65,7 @@ function Login() {
               },
             ]}
           >
-            <input type="password" placeholder="Password" />
+            <PasswordInput placeholder="Password" />
           </Form.Item>
 
           <div className="text-center mt-2 flex flex-col gap-1">
