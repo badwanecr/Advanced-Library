@@ -1,9 +1,56 @@
-import { Col, Form, message, Modal, Row, Select } from "antd";
+import { Col, DatePicker, Form, message, Modal, Row, Select } from "antd";
+import dayjs from "dayjs";
 import React from "react";
 import Button from "../../../components/Button";
 import { useDispatch } from "react-redux";
 import { AddBook, UpdateBook } from "../../../apicalls/books";
 import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
+
+// Alphabetical by label. The select is in "multiple" mode - typing filters this list but cannot
+// invent new values, so typos can't be saved as categories.
+const CATEGORY_OPTIONS = [
+  { value: "adventure", label: "Adventure" },
+  { value: "art", label: "Art" },
+  { value: "autobiography", label: "Autobiography" },
+  { value: "biography", label: "Biography" },
+  { value: "business", label: "Business" },
+  { value: "children", label: "Children" },
+  { value: "classics", label: "Classics" },
+  { value: "comics", label: "Comics" },
+  { value: "cookbook", label: "Cookbook" },
+  { value: "crime", label: "Crime" },
+  { value: "drama", label: "Drama" },
+  { value: "economics", label: "Economics" },
+  { value: "education", label: "Education" },
+  { value: "fantasy", label: "Fantasy" },
+  { value: "fiction", label: "Fiction" },
+  { value: "health", label: "Health" },
+  { value: "history", label: "History" },
+  { value: "horror", label: "Horror" },
+  { value: "law", label: "Law" },
+  { value: "memoir", label: "Memoir" },
+  { value: "mystery", label: "Mystery" },
+  { value: "mythology", label: "Mythology" },
+  { value: "non-fiction", label: "Non-Fiction" },
+  { value: "philosophy", label: "Philosophy" },
+  { value: "poetry", label: "Poetry" },
+  { value: "politics", label: "Politics" },
+  { value: "psychology", label: "Psychology" },
+  { value: "reference", label: "Reference" },
+  { value: "religion", label: "Religion" },
+  { value: "romance", label: "Romance" },
+  { value: "satire", label: "Satire" },
+  { value: "science", label: "Science" },
+  { value: "science-fiction", label: "Science Fiction" },
+  { value: "self-help", label: "Self-Help" },
+  { value: "short-stories", label: "Short Stories" },
+  { value: "sports", label: "Sports" },
+  { value: "technology", label: "Technology" },
+  { value: "thriller", label: "Thriller" },
+  { value: "travel", label: "Travel" },
+  { value: "true-crime", label: "True Crime" },
+  { value: "young-adult", label: "Young Adult" },
+];
 
 function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelectedBook }) {
   const dispatch = useDispatch();
@@ -13,6 +60,8 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
 
       values.rentPerDay = Number(values.rentPerDay);
       values.totalCopies = parseInt(values.totalCopies, 10);
+      // DatePicker gives a dayjs object; the API expects an ISO date (yyyy-MM-dd)
+      values.publishedDate = values.publishedDate.format("YYYY-MM-DD");
 
       let response = null;
       if (formType === "add") {
@@ -45,7 +94,15 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
       width={800}
       footer={null}
     >
-      <Form layout="vertical" onFinish={onFinish} initialValues={selectedBook}>
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={
+          selectedBook
+            ? { ...selectedBook, publishedDate: dayjs(selectedBook.publishedDate) }
+            : undefined
+        }
+      >
         <Row gutter={[20]}>
           <Col span={24}>
             <Form.Item
@@ -100,9 +157,15 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
             <Form.Item
               label="Published Date"
               name="publishedDate"
-              rules={[{ required: true, message: "Please input published date" }]}
+              rules={[{ required: true, message: "Please select published date" }]}
             >
-              <input type="date" />
+              <DatePicker
+                format="DD-MM-YYYY"
+                placeholder="DD-MM-YYYY"
+                style={{ width: "100%" }}
+                // a catalogued book can't be published in the future
+                disabledDate={(current) => current && current > dayjs().endOf("day")}
+              />
             </Form.Item>
           </Col>
 
@@ -113,17 +176,9 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
               rules={[{ required: true, message: "Please select at least one category" }]}
             >
               <Select
-                mode="tags"
-                placeholder="Select or type to add a category"
-                options={[
-                  { value: "mythology", label: "Mythology" },
-                  { value: "fiction", label: "Fiction" },
-                  { value: "non-fiction", label: "Non-Fiction" },
-                  { value: "biography", label: "Biography" },
-                  { value: "poetry", label: "Poetry" },
-                  { value: "drama", label: "Drama" },
-                  { value: "history", label: "History" },
-                ]}
+                mode="multiple"
+                placeholder="Select categories"
+                options={CATEGORY_OPTIONS}
               />
             </Form.Item>
           </Col>

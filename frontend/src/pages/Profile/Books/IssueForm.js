@@ -1,7 +1,7 @@
-import { Modal, message } from "antd";
+import { DatePicker, Modal, message } from "antd";
 import React, { useEffect, useState } from "react";
 import Button from "../../../components/Button";
-import moment from "moment";
+import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { GetUserById } from "../../../apicalls/users";
 import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
@@ -20,8 +20,9 @@ function IssueForm({
   const [errorMessage, setErrorMessage] = React.useState("");
   const [patronData, setPatronData] = useState(null);
   const [patronId, setPatronId] = React.useState(type === "edit" ? selectedIssue.user.id : "");
+  // held as a dayjs object (or null) - formatted to ISO only when calling the API
   const [returnDate, setReturnDate] = React.useState(
-    type === "edit" ? moment(selectedIssue.returnDate).format("YYYY-MM-DD") : ""
+    type === "edit" ? dayjs(selectedIssue.returnDate) : null
   );
   const dispatch = useDispatch();
 
@@ -56,16 +57,17 @@ function IssueForm({
     try {
       dispatch(ShowLoading());
       let response = null;
+      const isoReturnDate = returnDate.format("YYYY-MM-DD");
       if (type !== "edit") {
         response = await IssueBook({
           bookId: selectedBook.id,
           userId: patronData.id,
-          returnDate,
+          returnDate: isoReturnDate,
         });
       } else {
         response = await EditIssue({
           issueId: selectedIssue.id,
-          returnDate,
+          returnDate: isoReturnDate,
         });
       }
       dispatch(HideLoading());
@@ -73,7 +75,7 @@ function IssueForm({
         message.success(response.message);
         getData();
         setPatronId("");
-        setReturnDate("");
+        setReturnDate(null);
         setValidated(false);
         setErrorMessage("");
         setSelectedBook(null);
@@ -94,6 +96,11 @@ function IssueForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
+  // whole days between today and the due date - matches how the backend computes rent,
+  // so this preview can't disagree with what actually gets charged
+  const days = returnDate ? returnDate.startOf("day").diff(dayjs().startOf("day"), "day") : 0;
+  const estimatedRent = Math.max(0, days) * (selectedBook?.rentPerDay ?? 0);
+
   return (
     <Modal title="" open={open} onCancel={() => setOpen(false)} footer={null} centered>
       <div className="flex flex-col gap-2">
@@ -112,12 +119,14 @@ function IssueForm({
         </div>
         <div>
           <span>Return Date </span>
-          <input
-            type="date"
+          <DatePicker
             value={returnDate}
-            onChange={(e) => setReturnDate(e.target.value)}
-            placeholder="Return Date"
-            min={moment().format("YYYY-MM-DD")}
+            onChange={(date) => setReturnDate(date)}
+            format="DD-MM-YYYY"
+            placeholder="DD-MM-YYYY"
+            style={{ width: "100%" }}
+            // a book can't be due back before today
+            disabledDate={(current) => current && current < dayjs().startOf("day")}
           />
         </div>
 
@@ -126,12 +135,9 @@ function IssueForm({
         {validated && (
           <div className="bg-secondary p-1 text-white">
             <h1 className="text-sm">Patron : {patronData.name}</h1>
-            <h1>Number Of Days : {moment(returnDate).diff(moment(), "days")}</h1>
+            <h1>Number Of Days : {days}</h1>
             <h1>Rent per Day : {selectedBook.rentPerDay}</h1>
-            <h1>
-              Estimated Rent :{" "}
-              {Math.max(0, moment(returnDate).diff(moment(), "days")) * selectedBook?.rentPerDay}
-            </h1>
+            <h1>Estimated Rent : {estimatedRent}</h1>
           </div>
         )}
 
@@ -140,7 +146,7 @@ function IssueForm({
           {type === "add" && (
             <Button
               title="Validate"
-              disabled={patronId === "" || returnDate === ""}
+              disabled={patronId === "" || !returnDate}
               onClick={validate}
             />
           )}
@@ -148,7 +154,7 @@ function IssueForm({
             <Button
               title={type === "edit" ? "Edit" : "Issue"}
               onClick={onIssue}
-              disabled={patronId === "" || returnDate === ""}
+              disabled={patronId === "" || !returnDate}
             />
           )}
         </div>
