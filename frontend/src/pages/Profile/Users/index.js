@@ -78,7 +78,7 @@ function Users({ role }) {
       <div className="section-heading">
         <h1>{role.charAt(0).toUpperCase() + role.slice(1)}s</h1>
       </div>
-      <Table dataSource={users} columns={columns} rowKey="id" />
+      <Table dataSource={users} columns={columns} rowKey="id" scroll={{ x: "max-content" }} />
 
       {showIssuedBooks && (
         <IssuedBooks

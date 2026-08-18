@@ -44,7 +44,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="card p-2">
+      <div className="card p-2 profile-tabs-card">
         <Tabs defaultActiveKey="1" items={items} />
       </div>
     </div>

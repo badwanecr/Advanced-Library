@@ -589,3 +589,106 @@ table {
 ::-webkit-scrollbar-thumb:hover {
   background: #aab1af;
 }
+
+/* ===== responsive ===== */
+
+/* a long name shouldn't be able to blow out the header at any width */
+.user-name {
+  display: block;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* tablets and narrow windows */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 12px 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .brand-title {
+    font-size: 18px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+  }
+
+  .section-heading h1 {
+    font-size: 19px;
+  }
+
+  /* let the search box use the full row once it wraps under the heading */
+  .search-input-wrap {
+    width: 100%;
+  }
+
+  .authentication-form {
+    padding: 28px 22px;
+  }
+
+  .profile-header-card {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .stat-card {
+    padding: 16px 18px;
+  }
+
+  .book-card-image {
+    height: 220px;
+  }
+}
+
+/* phones */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 12px;
+  }
+
+  .authentication-form {
+    padding: 24px 16px;
+  }
+
+  .brand-title {
+    font-size: 16px;
+  }
+
+  .user-chip {
+    padding: 4px 6px 4px 4px;
+  }
+
+  .user-name {
+    max-width: 110px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 14px;
+  }
+
+  .avatar-lg {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    font-size: 24px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* reclaim horizontal space eaten by nested card padding
+     (.card.x beats the .p-2 utility regardless of stylesheet order) */
+  .card.profile-tabs-card {
+    padding: 10px;
+  }
+}

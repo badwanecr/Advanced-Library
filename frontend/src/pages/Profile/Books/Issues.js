@@ -72,12 +72,10 @@ function Issues({ open = false, setOpen, selectedBook, reloadBooks }) {
     {
       title: "Id",
       dataIndex: "id",
-      render: (id, record) => (
-        <div className="flex flex-col">
-          <span>{id}</span>
-          <span className="text-xs text-gray-500">{record.user.name}</span>
-        </div>
-      ),
+    },
+    {
+      title: "Patron",
+      dataIndex: ["user", "name"],
     },
     {
       title: "Issued On",
@@ -130,11 +128,19 @@ function Issues({ open = false, setOpen, selectedBook, reloadBooks }) {
   ];
 
   return (
-    <Modal title="" open={open} onCancel={() => setOpen(false)} footer={null} width={1400} centered>
+    <Modal
+      title=""
+      open={open}
+      onCancel={() => setOpen(false)}
+      footer={null}
+      width="95%"
+      style={{ maxWidth: 1400 }}
+      centered
+    >
       <h1 className="text-xl mt-1 mb-1 text-secondary uppercase font-bold text-center">
         Issues of {selectedBook.title}
       </h1>
-      <Table columns={columns} dataSource={issues} rowKey="id" />
+      <Table columns={columns} dataSource={issues} rowKey="id" scroll={{ x: "max-content" }} />
 
       {showIssueForm && (
         <IssueForm

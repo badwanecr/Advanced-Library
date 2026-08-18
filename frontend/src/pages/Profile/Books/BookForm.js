@@ -91,7 +91,8 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
       open={open}
       onCancel={() => setOpen(false)}
       centered
-      width={800}
+      width="95%"
+      style={{ maxWidth: 800 }}
       footer={null}
     >
       <Form
@@ -134,7 +135,7 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item
               label="Author"
               name="author"
@@ -143,7 +144,7 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
               <input type="text" />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item
               label="Publisher"
               name="publisher"
@@ -153,7 +154,7 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item
               label="Published Date"
               name="publishedDate"
@@ -169,7 +170,7 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item
               label="Categories"
               name="categories"
@@ -183,7 +184,7 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item
               label="Rent Per Day"
               name="rentPerDay"
@@ -193,7 +194,7 @@ function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelec
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={12} md={8}>
             <Form.Item
               label="Total Copies"
               name="totalCopies"

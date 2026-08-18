@@ -67,19 +67,20 @@ public class IssueService {
         return toDto(issueRepository.save(issue));
     }
 
+    @Transactional(readOnly = true)
     public List<IssueDto> getIssues(IssueFilterRequest filter) {
         Long bookId = filter != null ? filter.getBookId() : null;
         Long userId = filter != null ? filter.getUserId() : null;
 
         List<Issue> issues;
         if (bookId != null && userId != null) {
-            issues = issueRepository.findByBookIdAndUserIdOrderByIssueDateDesc(bookId, userId);
+            issues = issueRepository.findByBookIdAndUserIdDetailed(bookId, userId);
         } else if (bookId != null) {
-            issues = issueRepository.findByBookIdOrderByIssueDateDesc(bookId);
+            issues = issueRepository.findByBookIdDetailed(bookId);
         } else if (userId != null) {
-            issues = issueRepository.findByUserIdOrderByIssueDateDesc(userId);
+            issues = issueRepository.findByUserIdDetailed(userId);
         } else {
-            issues = issueRepository.findAllByOrderByIssueDateDesc();
+            issues = issueRepository.findAllDetailed();
         }
 
         return issues.stream().map(this::toDto).toList();

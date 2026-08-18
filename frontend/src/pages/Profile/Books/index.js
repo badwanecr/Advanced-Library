@@ -163,7 +163,7 @@ function Books() {
         />
       </div>
 
-      <Table columns={columns} dataSource={books} rowKey="id" />
+      <Table columns={columns} dataSource={books} rowKey="id" scroll={{ x: "max-content" }} />
 
       {openBookForm && (
         <BookForm

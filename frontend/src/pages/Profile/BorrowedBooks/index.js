@@ -69,7 +69,7 @@ function IssuedBooks() {
       <div className="section-heading">
         <h1>Books Borrowed</h1>
       </div>
-      <Table columns={columns} dataSource={issuedBooks} rowKey="id" />
+      <Table columns={columns} dataSource={issuedBooks} rowKey="id" scroll={{ x: "max-content" }} />
     </div>
   );
 }

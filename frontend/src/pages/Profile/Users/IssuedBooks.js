@@ -64,12 +64,18 @@ function IssuedBooks({ showIssuedBooks, setShowIssuedBooks, selectedUser }) {
     },
   ];
   return (
-    <Modal open={showIssuedBooks} onCancel={() => setShowIssuedBooks(false)} footer={null} width={1400}>
+    <Modal
+      open={showIssuedBooks}
+      onCancel={() => setShowIssuedBooks(false)}
+      footer={null}
+      width="95%"
+      style={{ maxWidth: 1400 }}
+    >
       <h1 className="text-secondary mb-1 text-xl text-center font-bold uppercase">
         {selectedUser.name}'s Issued Books
       </h1>
 
-      <Table columns={columns} dataSource={issuedBooks} rowKey="id" />
+      <Table columns={columns} dataSource={issuedBooks} rowKey="id" scroll={{ x: "max-content" }} />
     </Modal>
   );
 }
