@@ -53,6 +53,13 @@
             <version>2.6.0</version>
         </dependency>
 
+        <!-- Renders ebook pages to images server-side so patrons never receive the PDF itself -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
         <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

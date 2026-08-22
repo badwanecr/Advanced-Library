@@ -9,3 +9,6 @@ target/
 
 # Local secrets - never commit
 .env
+
+# Uploaded ebook PDFs
+ebook-files/

@@ -5,52 +5,7 @@ import Button from "../../../components/Button";
 import { useDispatch } from "react-redux";
 import { AddBook, UpdateBook } from "../../../apicalls/books";
 import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
-
-// Alphabetical by label. The select is in "multiple" mode - typing filters this list but cannot
-// invent new values, so typos can't be saved as categories.
-const CATEGORY_OPTIONS = [
-  { value: "adventure", label: "Adventure" },
-  { value: "art", label: "Art" },
-  { value: "autobiography", label: "Autobiography" },
-  { value: "biography", label: "Biography" },
-  { value: "business", label: "Business" },
-  { value: "children", label: "Children" },
-  { value: "classics", label: "Classics" },
-  { value: "comics", label: "Comics" },
-  { value: "cookbook", label: "Cookbook" },
-  { value: "crime", label: "Crime" },
-  { value: "drama", label: "Drama" },
-  { value: "economics", label: "Economics" },
-  { value: "education", label: "Education" },
-  { value: "fantasy", label: "Fantasy" },
-  { value: "fiction", label: "Fiction" },
-  { value: "health", label: "Health" },
-  { value: "history", label: "History" },
-  { value: "horror", label: "Horror" },
-  { value: "law", label: "Law" },
-  { value: "memoir", label: "Memoir" },
-  { value: "mystery", label: "Mystery" },
-  { value: "mythology", label: "Mythology" },
-  { value: "non-fiction", label: "Non-Fiction" },
-  { value: "philosophy", label: "Philosophy" },
-  { value: "poetry", label: "Poetry" },
-  { value: "politics", label: "Politics" },
-  { value: "psychology", label: "Psychology" },
-  { value: "reference", label: "Reference" },
-  { value: "religion", label: "Religion" },
-  { value: "romance", label: "Romance" },
-  { value: "satire", label: "Satire" },
-  { value: "science", label: "Science" },
-  { value: "science-fiction", label: "Science Fiction" },
-  { value: "self-help", label: "Self-Help" },
-  { value: "short-stories", label: "Short Stories" },
-  { value: "sports", label: "Sports" },
-  { value: "technology", label: "Technology" },
-  { value: "thriller", label: "Thriller" },
-  { value: "travel", label: "Travel" },
-  { value: "true-crime", label: "True Crime" },
-  { value: "young-adult", label: "Young Adult" },
-];
+import { CATEGORY_OPTIONS } from "../../../constants/categories";
 
 function BookForm({ open, setOpen, reloadBooks, formType, selectedBook, setSelectedBook }) {
   const dispatch = useDispatch();

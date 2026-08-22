@@ -14,6 +14,7 @@ import Loader from "./components/Loader";
 import { useSelector } from "react-redux";
 import Profile from "./pages/Profile";
 import BookDescription from "./pages/BookDescription";
+import EbookReader from "./pages/EbookReader";
 
 const antdTheme = {
   token: {
@@ -67,6 +68,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <BookDescription />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/ebook/:id"
+              element={
+                <ProtectedRoute>
+                  <EbookReader />
                 </ProtectedRoute>
               }
             />

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReportController {
 
     private final ReportService reportService;
+    private final com.libassist.library.security.AccessGuard accessGuard;
 
     @GetMapping("/get-reports")
     public ApiResponse<ReportsDto> getReports() {
+        accessGuard.requireAdmin("view reports");
         return ApiResponse.success("Reports fetched successfully", reportService.getReports());
     }
 }

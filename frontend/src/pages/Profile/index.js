@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs } from "antd";
 import Books from "./Books";
+import Ebooks from "./Ebooks";
 import Issues from "./Issues";
 import Users from "./Users";
 import Reports from "./Reports";
@@ -31,6 +32,7 @@ function Profile() {
   if (role !== "patron") {
     items.push(
       { key: "3", label: "Books", children: <Books /> },
+      { key: "9", label: "eBooks", children: <Ebooks /> },
       { key: "8", label: "Issues", children: <Issues /> },
       { key: "4", label: "Patrons", children: <Users role="patron" /> }
     );
