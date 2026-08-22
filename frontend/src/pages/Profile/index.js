@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs } from "antd";
 import Books from "./Books";
+import Issues from "./Issues";
 import Users from "./Users";
 import Reports from "./Reports";
 import { useSelector } from "react-redux";
@@ -30,6 +31,7 @@ function Profile() {
   if (role !== "patron") {
     items.push(
       { key: "3", label: "Books", children: <Books /> },
+      { key: "8", label: "Issues", children: <Issues /> },
       { key: "4", label: "Patrons", children: <Users role="patron" /> }
     );
   }

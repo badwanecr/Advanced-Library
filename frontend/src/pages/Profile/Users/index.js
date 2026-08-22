@@ -5,6 +5,7 @@ import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
 import moment from "moment";
 import { GetAllUsers } from "../../../apicalls/users";
 import Button from "../../../components/Button";
+import useSerialColumn from "../../../hooks/useSerialColumn";
 import IssuedBooks from "./IssuedBooks";
 
 function Users({ role }) {
@@ -34,8 +35,13 @@ function Users({ role }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [role]);
 
+  const { serialColumn, paginationProps } = useSerialColumn(users.length);
+
   const columns = [
+    serialColumn,
     {
+      // the real database id stays visible here: it's what gets typed into the
+      // "Patron Id" field when issuing a book
       title: "Id",
       dataIndex: "id",
     },
@@ -78,7 +84,13 @@ function Users({ role }) {
       <div className="section-heading">
         <h1>{role.charAt(0).toUpperCase() + role.slice(1)}s</h1>
       </div>
-      <Table dataSource={users} columns={columns} rowKey="id" scroll={{ x: "max-content" }} />
+      <Table
+        dataSource={users}
+        columns={columns}
+        rowKey="id"
+        scroll={{ x: "max-content" }}
+        pagination={paginationProps}
+      />
 
       {showIssuedBooks && (
         <IssuedBooks

@@ -4,6 +4,7 @@ import { GetIssues } from "../../../apicalls/issues";
 import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import useSerialColumn from "../../../hooks/useSerialColumn";
 
 function IssuedBooks({ showIssuedBooks, setShowIssuedBooks, selectedUser }) {
   const [issuedBooks, setIssuedBooks] = React.useState([]);
@@ -28,11 +29,10 @@ function IssuedBooks({ showIssuedBooks, setShowIssuedBooks, selectedUser }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { serialColumn, paginationProps } = useSerialColumn(issuedBooks.length);
+
   const columns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-    },
+    serialColumn,
     {
       title: "Book",
       dataIndex: "book",
@@ -75,7 +75,13 @@ function IssuedBooks({ showIssuedBooks, setShowIssuedBooks, selectedUser }) {
         {selectedUser.name}'s Issued Books
       </h1>
 
-      <Table columns={columns} dataSource={issuedBooks} rowKey="id" scroll={{ x: "max-content" }} />
+      <Table
+        columns={columns}
+        dataSource={issuedBooks}
+        rowKey="id"
+        scroll={{ x: "max-content" }}
+        pagination={paginationProps}
+      />
     </Modal>
   );
 }
