@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "backend",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/chandrakantbadwane/Desktop/Advanced-Library/backend && JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.12.1/libexec/openjdk.jdk/Contents/Home /opt/homebrew/bin/mvn spring-boot:run -Dspring-boot.run.arguments='--server.port=5000 --server.address=127.0.0.1'"
+      ],
+      "port": 5000,
+      "url": "http://127.0.0.1:5000",
+      "autoPort": false
+    }
+  ]
+}

@@ -6,3 +6,6 @@ target/
 .project
 .vscode/
 *.log
+
+# Local secrets - never commit
+.env
